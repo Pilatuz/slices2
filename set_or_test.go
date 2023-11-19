@@ -1,10 +1,22 @@
 package slices2_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/Pilatuz/slices2"
 )
+
+// ExampleSetOr an example for `SetOr` function.
+func ExampleSetOr() {
+	a := []string{"foo", "bar"}
+	b := []string{"bar", "baz"}
+
+	c := slices2.SetOr(a, b)
+	fmt.Println(a, "|", b, "=", c)
+	// Output:
+	// [foo bar] | [bar baz] = [foo bar baz]
+}
 
 // TestSetOr unit tests for `SetOr` function.
 func TestSetOr(tt *testing.T) {

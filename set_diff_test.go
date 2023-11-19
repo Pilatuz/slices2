@@ -1,10 +1,26 @@
 package slices2_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/Pilatuz/slices2"
 )
+
+// ExampleSetDiff an example for `SetDiff` function.
+func ExampleSetDiff() {
+	a := []string{"foo", "bar"}
+	b := []string{"bar", "baz"}
+
+	removed, added := slices2.SetDiff(a, b)
+	fmt.Println(a, "diff", b)
+	fmt.Println("added:", added)
+	fmt.Println("removed:", removed)
+	// Output:
+	// [foo bar] diff [bar baz]
+	// added: [baz]
+	// removed: [foo]
+}
 
 // TestSetDiff unit tests for `SetDiff` function.
 func TestSetDiff(tt *testing.T) {

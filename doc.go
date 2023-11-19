@@ -1,6 +1,6 @@
-// package slices2 contains slice related helpers missing in standard "slices" package.
+// Package slices2 contains slice related helpers missing in standard "slices" package.
 //
-// To avoid conflicts with standard "slices" package the package name is as slices2:
+// To avoid conflicts with standard "slices" package the package named as slices2:
 //
 //	import (
 //		"github.com/Pilatuz/slices2"

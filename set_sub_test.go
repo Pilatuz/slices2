@@ -1,10 +1,22 @@
 package slices2_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/Pilatuz/slices2"
 )
+
+// ExampleSetSub an example for `SetSub` function.
+func ExampleSetSub() {
+	a := []string{"foo", "bar"}
+	b := []string{"bar", "baz"}
+
+	c := slices2.SetSub(a, b)
+	fmt.Println(a, "-", b, "=", c)
+	// Output:
+	// [foo bar] - [bar baz] = [foo]
+}
 
 // TestSetSub unit tests for `SetSub` function.
 func TestSetSub(tt *testing.T) {

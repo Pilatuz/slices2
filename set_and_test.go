@@ -1,10 +1,22 @@
 package slices2_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/Pilatuz/slices2"
 )
+
+// ExampleSetAnd an example for `SetAnd` function.
+func ExampleSetAnd() {
+	a := []string{"foo", "bar"}
+	b := []string{"bar", "baz"}
+
+	c := slices2.SetAnd(a, b)
+	fmt.Println(a, "&", b, "=", c)
+	// Output:
+	// [foo bar] & [bar baz] = [bar]
+}
 
 // TestSetAnd unit tests for `SetAnd` function.
 func TestSetAnd(tt *testing.T) {
