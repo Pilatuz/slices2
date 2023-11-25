@@ -30,7 +30,7 @@ jobs:
       run: go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
 
     - name: Coverage
-      if: ${{ matrix.go }} == '1.21'
+      if: ${{ matrix.go == '1.21' }}
       uses: codecov/codecov-action@v3
       with:
         files: coverage.txt
