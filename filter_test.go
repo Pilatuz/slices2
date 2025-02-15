@@ -14,7 +14,7 @@ func ExampleFilter() {
 	cond := func(s string) bool {
 		return utf8.RuneCountInString(s) > 3
 	}
-	fmt.Println(slices2.Filter(cond, ss))
+	fmt.Println(slices2.Filter(ss, cond))
 	// Output:
 	// [barbaz]
 }
@@ -37,12 +37,12 @@ func TestFilter(tt *testing.T) {
 				return s == "foo"
 			}
 
-			if actual := slices2.Filter(isFoo, input); !equal(actual, expected) || same(actual, input) {
+			if actual := slices2.Filter(input, isFoo); !equal(actual, expected) || same(actual, input) {
 				t.Errorf("Filter(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			}
 
 			input2 := slices2.Clone(input)
-			if actual := slices2.FilterInPlace(isFoo, input2); !equal(actual, expected) {
+			if actual := slices2.FilterInPlace(input2, isFoo); !equal(actual, expected) {
 				t.Errorf("FilterInPlace(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			} else if len(actual) > 0 && !same(actual, input2) {
 				t.Errorf("FilterInPlace(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
@@ -73,12 +73,12 @@ func TestFilter(tt *testing.T) {
 				return s == 123
 			}
 
-			if actual := slices2.Filter(isFoo, input); !equal(actual, expected) || same(actual, input) {
+			if actual := slices2.Filter(input, isFoo); !equal(actual, expected) || same(actual, input) {
 				t.Errorf("Filter(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			}
 
 			input2 := slices2.Clone(input)
-			if actual := slices2.FilterInPlace(isFoo, input2); !equal(actual, expected) {
+			if actual := slices2.FilterInPlace(input2, isFoo); !equal(actual, expected) {
 				t.Errorf("FilterInPlace(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			} else if len(actual) > 0 && !same(actual, input2) {
 				t.Errorf("FilterInPlace(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)

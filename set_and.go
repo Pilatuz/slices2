@@ -3,12 +3,12 @@ package slices2
 // SetAnd returns the intersection between two sets.
 // I.e. elements presented in both slices.
 func SetAnd[S ~[]E, E comparable](s1 S, s2 S) S {
-	return SetAndBy(me[E], s1, s2)
+	return SetAndBy(s1, s2, me[E])
 }
 
 // SetAndBy returns the intersection between two sets by custom key.
 // I.e. elements presented in both slices.
-func SetAndBy[S ~[]E, E any, K comparable](byFn func(E) K, s1 S, s2 S) S {
+func SetAndBy[S ~[]E, E any, K comparable](s1 S, s2 S, byFn func(E) K) S {
 	if len(s1) == 0 || len(s2) == 0 {
 		return nil
 	}

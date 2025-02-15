@@ -36,7 +36,7 @@ func TestSetSub(tt *testing.T) {
 			if a1 := slices2.SetSub(a, b); !equal(a1, e1) {
 				t.Errorf("SetSub(`%#v`,`%#v`)=`%#v`, expected `%#v`", a, b, a1, e1)
 			}
-			if a1 := slices2.SetSubBy(func(v string) string { return v }, a, b); !equal(a1, e1) {
+			if a1 := slices2.SetSubBy(a, b, func(v string) string { return v }); !equal(a1, e1) {
 				t.Errorf("SetSubBy(`%#v`,`%#v`)=`%#v`, expected `%#v`", a, b, a1, e1)
 			}
 		}
@@ -82,7 +82,7 @@ func TestSetSub(tt *testing.T) {
 			if a1 := slices2.SetSub(a, b); !equal(a1, e1) {
 				t.Errorf("SetSub(`%#v`,`%#v`)=`%#v`, expected `%#v`", a, b, a1, e1)
 			}
-			if a1 := slices2.SetSubBy(func(v int) int { return v }, a, b); !equal(a1, e1) {
+			if a1 := slices2.SetSubBy(a, b, func(v int) int { return v }); !equal(a1, e1) {
 				t.Errorf("SetSubBy(`%#v`,`%#v`)=`%#v`, expected `%#v`", a, b, a1, e1)
 			}
 		}
