@@ -34,7 +34,7 @@ func TestSetAnd(tt *testing.T) {
 			if a1 := slices2.SetAnd(a, b); !equal(a1, e1) {
 				t.Errorf("SetAnd(`%#v`,`%#v`)=`%#v`, expected `%#v`", a, b, a1, e1)
 			}
-			if a1 := slices2.SetAndBy(func(v string) string { return v }, a, b); !equal(a1, e1) {
+			if a1 := slices2.SetAndBy(a, b, func(v string) string { return v }); !equal(a1, e1) {
 				t.Errorf("SetAndBy(`%#v`,`%#v`)=`%#v`, expected `%#v`", a, b, a1, e1)
 			}
 		}
@@ -77,7 +77,7 @@ func TestSetAnd(tt *testing.T) {
 			if a1 := slices2.SetAnd(a, b); !equal(a1, e1) {
 				t.Errorf("SetAnd(`%#v`,`%#v`)=`%#v`, expected `%#v`", a, b, a1, e1)
 			}
-			if a1 := slices2.SetAndBy(func(v int) int { return v }, a, b); !equal(a1, e1) {
+			if a1 := slices2.SetAndBy(a, b, func(v int) int { return v }); !equal(a1, e1) {
 				t.Errorf("SetAndBy(`%#v`,`%#v`)=`%#v`, expected `%#v`", a, b, a1, e1)
 			}
 		}

@@ -40,7 +40,7 @@ func TestSetDiff(tt *testing.T) {
 			if a1, a2 := slices2.SetDiff(a, b); !equal(a1, e1) || !equal(a2, e2) {
 				t.Errorf("SetDiff(`%#v`,`%#v`)=(`%#v`,`%#v`), expected (`%#v`,`%#v`)", a, b, a1, a2, e1, e2)
 			}
-			if a1, a2 := slices2.SetDiffBy(func(v string) string { return v }, a, b); !equal(a1, e1) || !equal(a2, e2) {
+			if a1, a2 := slices2.SetDiffBy(a, b, func(v string) string { return v }); !equal(a1, e1) || !equal(a2, e2) {
 				t.Errorf("SetDiffBy(`%#v`,`%#v`)=(`%#v`,`%#v`), expected (`%#v`,`%#v`)", a, b, a1, a2, e1, e2)
 			}
 		}
@@ -92,7 +92,7 @@ func TestSetDiff(tt *testing.T) {
 			if a1, a2 := slices2.SetDiff(a, b); !equal(a1, e1) || !equal(a2, e2) {
 				t.Errorf("SetDiff(`%#v`,`%#v`)=(`%#v`,`%#v`), expected (`%#v`,`%#v`)", a, b, a1, a2, e1, e2)
 			}
-			if a1, a2 := slices2.SetDiffBy(func(v int) int { return v }, a, b); !equal(a1, e1) || !equal(a2, e2) {
+			if a1, a2 := slices2.SetDiffBy(a, b, func(v int) int { return v }); !equal(a1, e1) || !equal(a2, e2) {
 				t.Errorf("SetDiffBy(`%#v`,`%#v`)=(`%#v`,`%#v`), expected (`%#v`,`%#v`)", a, b, a1, a2, e1, e2)
 			}
 		}

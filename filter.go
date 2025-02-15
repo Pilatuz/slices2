@@ -3,19 +3,19 @@ package slices2
 // Filter removes elements that DO NOT PASS condition.
 //
 // Returns new slice with elements removed.
-func Filter[S ~[]E, E any](condFn func(E) bool, s S) S {
-	return filter(initNew[S, E], condFn, s)
+func Filter[S ~[]E, E any](s S, condFn func(E) bool) S {
+	return filter(s, initNew[S, E], condFn)
 }
 
 // FilterInPlace removes elements that DO NOT PASS condition.
 //
 // Returns original slice with elements removed in-place.
-func FilterInPlace[S ~[]E, E any](condFn func(E) bool, s S) S {
-	return filter(initSame[S, E], condFn, s)
+func FilterInPlace[S ~[]E, E any](s S, condFn func(E) bool) S {
+	return filter(s, initSame[S, E], condFn)
 }
 
 // filter removes elements that DO NOT PASS condition.
-func filter[S ~[]E, E any](initFn func(S) S, condFn func(E) bool, s S) S {
+func filter[S ~[]E, E any](s S, initFn func(S) S, condFn func(E) bool) S {
 	if s == nil {
 		return nil
 	}

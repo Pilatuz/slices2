@@ -21,7 +21,7 @@ func TestGroupBy(tt *testing.T) {
 
 		test := func(x []string, e map[bool][]string) {
 			t.Helper()
-			if a := slices2.GroupBy(isCapital, x); !reflect.DeepEqual(a, e) {
+			if a := slices2.GroupBy(x, isCapital); !reflect.DeepEqual(a, e) {
 				t.Errorf("GroupBy(`%#v`)=`%#v`, expected `%#v`", x, a, e)
 			}
 		}
@@ -56,7 +56,7 @@ func TestGroupBy(tt *testing.T) {
 
 		test := func(x []int, e map[int][]int) {
 			t.Helper()
-			if a := slices2.GroupBy(isEven, x); !reflect.DeepEqual(a, e) {
+			if a := slices2.GroupBy(x, isEven); !reflect.DeepEqual(a, e) {
 				t.Errorf("GroupBy(`%#v`)=`%#v`, expected `%#v`", x, a, e)
 			}
 		}

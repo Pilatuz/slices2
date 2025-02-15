@@ -33,7 +33,7 @@ func TestUnique(tt *testing.T) {
 			if actual := slices2.Unique(input); !equal(actual, expected) || same(actual, input) {
 				t.Errorf("Unique(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			}
-			if actual := slices2.UniqueBy(func(v string) string { return v }, input); !equal(actual, expected) || same(actual, input) {
+			if actual := slices2.UniqueBy(input, func(v string) string { return v }); !equal(actual, expected) || same(actual, input) {
 				t.Errorf("UniqueBy(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			}
 
@@ -45,7 +45,7 @@ func TestUnique(tt *testing.T) {
 			}
 
 			input3 := slices2.Clone(input)
-			if actual := slices2.UniqueInPlaceBy(func(v string) string { return v }, input3); !equal(actual, expected) {
+			if actual := slices2.UniqueInPlaceBy(input3, func(v string) string { return v }); !equal(actual, expected) {
 				t.Errorf("UniqueInPlaceBy(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			} else if len(actual) > 0 && !same(actual, input3) {
 				t.Errorf("UniqueInPlaceBy(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
@@ -77,7 +77,7 @@ func TestUnique(tt *testing.T) {
 			if actual := slices2.Unique(input); !equal(actual, expected) || same(actual, input) {
 				t.Errorf("Unique(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			}
-			if actual := slices2.UniqueBy(func(v int) int { return v }, input); !equal(actual, expected) || same(actual, input) {
+			if actual := slices2.UniqueBy(input, func(v int) int { return v }); !equal(actual, expected) || same(actual, input) {
 				t.Errorf("UniqueBy(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			}
 
@@ -89,7 +89,7 @@ func TestUnique(tt *testing.T) {
 			}
 
 			input3 := slices2.Clone(input)
-			if actual := slices2.UniqueInPlaceBy(func(v int) int { return v }, input3); !equal(actual, expected) {
+			if actual := slices2.UniqueInPlaceBy(input3, func(v int) int { return v }); !equal(actual, expected) {
 				t.Errorf("UniqueInPlaceBy(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			} else if len(actual) > 0 && !same(actual, input3) {
 				t.Errorf("UniqueInPlaceBy(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
@@ -140,12 +140,12 @@ func TestUnique(tt *testing.T) {
 				return v.Name
 			}
 
-			if actual := slices2.UniqueBy(byName, input); !equal(actual, expected) || same(actual, input) {
+			if actual := slices2.UniqueBy(input, byName); !equal(actual, expected) || same(actual, input) {
 				t.Errorf("UniqueBy(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			}
 
 			input2 := slices2.Clone(input)
-			if actual := slices2.UniqueInPlaceBy(byName, input2); !equal(actual, expected) {
+			if actual := slices2.UniqueInPlaceBy(input2, byName); !equal(actual, expected) {
 				t.Errorf("UniqueInPlaceBy(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			} else if len(actual) > 0 && !same(actual, input2) {
 				t.Errorf("UniqueInPlaceBy(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)

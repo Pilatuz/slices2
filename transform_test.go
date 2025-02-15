@@ -15,7 +15,7 @@ func ExampleTransform() {
 		return out
 	}
 	ss := []string{"123", "456"}
-	ii := slices2.Transform(fromStr, ss)
+	ii := slices2.Transform(ss, fromStr)
 	fmt.Println(ii)
 	// Output:
 	// [123 456]
@@ -37,7 +37,7 @@ func TestTransform(tt *testing.T) {
 		test := func(input []string, expected []int) {
 			t.Helper()
 
-			if actual := slices2.Transform(fn, input); !equal(actual, expected) {
+			if actual := slices2.Transform(input, fn); !equal(actual, expected) {
 				t.Errorf("Transform(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			}
 		}
@@ -65,7 +65,7 @@ func TestTransform(tt *testing.T) {
 		test := func(input []string, expected []bool) {
 			t.Helper()
 
-			if actual := slices2.Transform(fn, input); !equal(actual, expected) {
+			if actual := slices2.Transform(input, fn); !equal(actual, expected) {
 				t.Errorf("Transform(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			}
 		}

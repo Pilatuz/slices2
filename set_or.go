@@ -1,26 +1,19 @@
 package slices2
 
-// SetOr returns the union between two (or more) sets.
+// SetOr returns the union between two sets.
 // I.e. unique elements presented in at least one slice.
-func SetOr[S ~[]E, E comparable](ss ...S) S {
-	return SetOrBy(me[E], ss...)
+func SetOr[S ~[]E, E comparable](s1 S, s2 S) S {
+	return SetOrBy(s1, s2, me[E])
 }
 
-// SetOrBy returns the union between two (or more) sets by custom key.
+// SetOrBy returns the union between two sets by custom key.
 // I.e. unique elements presented in at least one slice.
-func SetOrBy[S ~[]E, E any, K comparable](byFn func(E) K, ss ...S) S {
-	switch len(ss) {
-	case 0: // no slices
-		return nil
-	case 1: // only one slice
-		return ss[0] // as is // Clone(ss[0])?
-	}
-
+func SetOrBy[S ~[]E, E any, K comparable](s1 S, s2 S, byFn func(E) K) S {
 	// all elements seen so far
 	seen := make(map[K]struct{})
 
 	var out S // capacity is unknown
-	for _, s := range ss {
+	for _, s := range []S{s1, s2} {
 		for _, v := range s {
 			key := byFn(v)
 			if _, ok := seen[key]; ok {

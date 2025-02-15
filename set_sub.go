@@ -3,12 +3,12 @@ package slices2
 // SetSub returns set where all s2 elements removed from s1.
 // I.e. all elements presented in s1 and missing in s2.
 func SetSub[S ~[]E, E comparable](s1 S, s2 S) S {
-	return SetSubBy(me[E], s1, s2)
+	return SetSubBy(s1, s2, me[E])
 }
 
 // SetSubBy returns set where all s2 elements removed from s1 by custom key.
 // I.e. all elements presented in s1 and missing in s2.
-func SetSubBy[S ~[]E, E any, K comparable](byFn func(E) K, s1 S, s2 S) S {
+func SetSubBy[S ~[]E, E any, K comparable](s1 S, s2 S, byFn func(E) K) S {
 	if len(s2) == 0 {
 		return s1 // Clone(s1)?
 	}

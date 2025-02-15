@@ -14,7 +14,7 @@ func ExampleReject() {
 	cond := func(s string) bool {
 		return utf8.RuneCountInString(s) > 3
 	}
-	fmt.Println(slices2.Reject(cond, ss))
+	fmt.Println(slices2.Reject(ss, cond))
 	// Output:
 	// [foo]
 }
@@ -37,12 +37,12 @@ func TestReject(tt *testing.T) {
 				return s == "foo"
 			}
 
-			if actual := slices2.Reject(isFoo, input); !equal(actual, expected) || same(actual, input) {
+			if actual := slices2.Reject(input, isFoo); !equal(actual, expected) || same(actual, input) {
 				t.Errorf("Reject(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			}
 
 			input2 := slices2.Clone(input)
-			if actual := slices2.RejectInPlace(isFoo, input2); !equal(actual, expected) {
+			if actual := slices2.RejectInPlace(input2, isFoo); !equal(actual, expected) {
 				t.Errorf("RejectInPlace(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			} else if len(actual) > 0 && !same(actual, input2) {
 				t.Errorf("RejectInPlace(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
@@ -73,12 +73,12 @@ func TestReject(tt *testing.T) {
 				return s == 123
 			}
 
-			if actual := slices2.Reject(isFoo, input); !equal(actual, expected) || same(actual, input) {
+			if actual := slices2.Reject(input, isFoo); !equal(actual, expected) || same(actual, input) {
 				t.Errorf("Reject(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			}
 
 			input2 := slices2.Clone(input)
-			if actual := slices2.RejectInPlace(isFoo, input2); !equal(actual, expected) {
+			if actual := slices2.RejectInPlace(input2, isFoo); !equal(actual, expected) {
 				t.Errorf("RejectInPlace(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
 			} else if len(actual) > 0 && !same(actual, input2) {
 				t.Errorf("RejectInPlace(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)

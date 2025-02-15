@@ -30,13 +30,13 @@ func TestSetOr(tt *testing.T) {
 		BarFoo := []string{"bar", "foo"}
 		FooBarBaz := []string{"foo", "bar", "baz"}
 
-		test := func(expected []string, input ...[]string) {
+		test := func(expected []string, a, b []string) {
 			t.Helper()
-			if actual := slices2.SetOr(input...); !equal(actual, expected) {
-				t.Errorf("SetOr(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
+			if actual := slices2.SetOr(a, b); !equal(actual, expected) {
+				t.Errorf("SetOr(`%#v`,`%#v`)=`%#v`, expected `%#v`", a, b, actual, expected)
 			}
-			if actual := slices2.SetOrBy(func(v string) string { return v }, input...); !equal(actual, expected) {
-				t.Errorf("SetOrBy(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
+			if actual := slices2.SetOrBy(a, b, func(v string) string { return v }); !equal(actual, expected) {
+				t.Errorf("SetOrBy(`%#v`,`%#v`)=`%#v`, expected `%#v`", a, b, actual, expected)
 			}
 		}
 
@@ -62,11 +62,6 @@ func TestSetOr(tt *testing.T) {
 		test(FooBarBaz, FooBarBaz, FooBarBaz) // [foo bar baz] || [foo bar baz] => [foo bar baz]
 		test(FooBar, FooBar, FooBar)          // [foo bar] || [foo bar] => [foo bar]
 		test(Foo, Foo, Foo)                   // [foo] || [foo] => [foo]
-
-		test(Nil)
-		test(Empty, Empty)
-		test(Foo, Foo, Foo, Empty, Nil)
-		test(FooBar, Nil, Empty, Foo, Empty, Bar, Empty, Nil, FooBar)
 	})
 
 	// integer
@@ -79,13 +74,13 @@ func TestSetOr(tt *testing.T) {
 		BarFoo := []int{456, 123}
 		FooBarBaz := []int{123, 456, 789}
 
-		test := func(expected []int, input ...[]int) {
+		test := func(expected []int, a, b []int) {
 			t.Helper()
-			if actual := slices2.SetOr(input...); !equal(actual, expected) {
-				t.Errorf("SetOr(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
+			if actual := slices2.SetOr(a, b); !equal(actual, expected) {
+				t.Errorf("SetOr(`%#v`,`%#v`)=`%#v`, expected `%#v`", a, b, actual, expected)
 			}
-			if actual := slices2.SetOrBy(func(v int) int { return v }, input...); !equal(actual, expected) {
-				t.Errorf("SetOrBy(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
+			if actual := slices2.SetOrBy(a, b, func(v int) int { return v }); !equal(actual, expected) {
+				t.Errorf("SetOrBy(`%#v`,`%#v`)=`%#v`, expected `%#v`", a, b, actual, expected)
 			}
 		}
 
@@ -111,10 +106,5 @@ func TestSetOr(tt *testing.T) {
 		test(FooBarBaz, FooBarBaz, FooBarBaz) // [foo bar baz] || [foo bar baz] => [foo bar baz]
 		test(FooBar, FooBar, FooBar)          // [foo bar] || [foo bar] => [foo bar]
 		test(Foo, Foo, Foo)                   // [foo] || [foo] => [foo]
-
-		test(Nil)
-		test(Empty, Empty)
-		test(Foo, Foo, Foo, Empty, Nil)
-		test(FooBar, Nil, Empty, Foo, Empty, Bar, Empty, Nil, FooBar)
 	})
 }
