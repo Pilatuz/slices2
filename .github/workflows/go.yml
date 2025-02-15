@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go: [ '1.18', '1.19', '1.20', '1.21' ]
+        go: [ '1.18', '1.19', '1.20', '1.21', '1.22', '1.23' ]
     name: slices2 on go${{ matrix.go }}
 
     steps:
@@ -28,10 +28,3 @@ jobs:
 
     - name: Test
       run: go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
-
-    - name: Coverage
-      if: ${{ matrix.go == '1.21' }}
-      uses: codecov/codecov-action@v3
-      with:
-        files: coverage.txt
-        fail_ci_if_error: true
