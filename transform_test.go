@@ -161,4 +161,18 @@ func TestTransformEx(tt *testing.T) {
 		test(FooBar[1:], []bool{false})
 		test(FooBar, []bool{true, false})
 	})
+
+	// *string => string
+	tt.Run("str_ptr", func(t *testing.T) {
+		foo, bar := "foo", "bar"
+
+		// skip nils
+		input := []*string{nil, &foo, nil, &bar, nil}
+		expected := []string{foo, bar}
+		if actual, err := slices2.TransformEx(input, slices2.Deref[string]); err != nil {
+			t.Errorf("TransformEx(`%#v`)=`%#v`, failed with `%v`", input, actual, err)
+		} else if !equal(actual, expected) {
+			t.Errorf("TransformEx(`%#v`)=`%#v`, expected `%#v`", input, actual, expected)
+		}
+	})
 }

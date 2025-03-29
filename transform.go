@@ -42,3 +42,14 @@ func TransformEx[E2 any, S1 ~[]E1, E1 any](s S1, convFn func(E1) (E2, error)) ([
 
 // ErrSkip special sentinel error indicating that current element should be skipped.
 var ErrSkip = errors.New("skip")
+
+// Deref is a transformation function which dereferences pointers to values.
+// Nil pointers are skipped.
+func Deref[T any](p *T) (T, error) {
+	if p == nil {
+		var EMPTY T
+		return EMPTY, ErrSkip
+	}
+
+	return *p, nil
+}
