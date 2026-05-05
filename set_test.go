@@ -1,11 +1,67 @@
 package slices2_test
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
 	"github.com/Pilatuz/slices2"
 )
+
+// ExampleSet an example for Set type and its methods.
+func ExampleSet() {
+	// Create a new set
+	s := slices2.NewSet("foo", "bar", "baz")
+	fmt.Println("Set:", s)
+
+	// Check if element exists
+	fmt.Println("Has(foo):", s.Has("foo"))
+	fmt.Println("Has(qux):", s.Has("qux"))
+
+	// Add elements
+	s.Push("qux")
+	fmt.Println("After Push(qux):", s)
+
+	// Remove elements
+	s.Pop("bar")
+	fmt.Println("After Pop(bar):", s)
+
+	// Check all elements (order is not guaranteed, so sort for predictable output)
+	fmt.Println("All():", slices2.Sorted(s.All()))
+
+	// Check HasAll
+	fmt.Println("HasAll(foo, qux):", s.HasAll("foo", "qux"))
+	fmt.Println("HasAll(foo, bar):", s.HasAll("foo", "bar"))
+
+	// Check HasAny
+	fmt.Println("HasAny(foo, bar):", s.HasAny("foo", "bar"))
+	fmt.Println("HasAny(qux, quux):", s.HasAny("qux", "quux"))
+	// Output:
+	// Set: map[bar:{} baz:{} foo:{}]
+	// Has(foo): true
+	// Has(qux): false
+	// After Push(qux): map[bar:{} baz:{} foo:{} qux:{}]
+	// After Pop(bar): map[baz:{} foo:{} qux:{}]
+	// All(): [baz foo qux]
+	// HasAll(foo, qux): true
+	// HasAll(foo, bar): false
+	// HasAny(foo, bar): true
+	// HasAny(qux, quux): true
+}
+
+// ExampleNewSetBy an example for NewSetBy function.
+func ExampleNewSetBy() {
+	type Person struct {
+		Name string
+		Age  int
+	}
+	people := []Person{{"Alice", 30}, {"Bob", 25}, {"Charlie", 30}}
+	// Group by age
+	ages := slices2.NewSetBy(people, func(p Person) int { return p.Age })
+	fmt.Println(ages)
+	// Output:
+	// map[25:{} 30:{}]
+}
 
 // TestSet unit tests for set.
 func TestSet(t *testing.T) {

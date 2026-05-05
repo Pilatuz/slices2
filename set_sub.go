@@ -8,6 +8,8 @@ func SetSub[S ~[]E, E comparable](s1 S, s2 S) S {
 
 // SetSubBy returns set where all s2 elements removed from s1 by custom key.
 // I.e. all elements presented in s1 and missing in s2.
+//
+// The byFn function extracts a comparison key from each element.
 func SetSubBy[S ~[]E, E any, K comparable](s1 S, s2 S, byFn func(E) K) S {
 	if len(s2) == 0 {
 		return s1 // Clone(s1)?

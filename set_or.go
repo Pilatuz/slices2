@@ -2,12 +2,15 @@ package slices2
 
 // SetOr returns the union between two sets.
 // I.e. unique elements presented in at least one slice.
+// Order: first elements from s1, then new elements from s2.
 func SetOr[S ~[]E, E comparable](s1 S, s2 S) S {
 	return SetOrBy(s1, s2, me[E])
 }
 
 // SetOrBy returns the union between two sets by custom key.
 // I.e. unique elements presented in at least one slice.
+// The byFn function extracts a comparison key from each element.
+// Order: first elements from s1, then new elements from s2.
 func SetOrBy[S ~[]E, E any, K comparable](s1 S, s2 S, byFn func(E) K) S {
 	// all elements seen so far
 	seen := make(Set[K])
@@ -17,7 +20,7 @@ func SetOrBy[S ~[]E, E any, K comparable](s1 S, s2 S, byFn func(E) K) S {
 		for _, v := range s {
 			key := byFn(v)
 			if seen.Has(key) {
-				continue // skip it
+				continue // skip duplicate
 			}
 			out = append(out, v)
 			seen.Push(key)
