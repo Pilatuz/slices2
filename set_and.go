@@ -14,14 +14,11 @@ func SetAndBy[S ~[]E, E any, K comparable](s1 S, s2 S, byFn func(E) K) S {
 	}
 
 	// all elements seen in s1
-	seen := make(map[K]struct{}, len(s1))
-	for _, v := range s1 {
-		seen[byFn(v)] = struct{}{}
-	}
+	seen := NewSetBy(s1, byFn)
 
 	var out S // capacity is unknown
 	for _, v := range s2 {
-		if _, ok := seen[byFn(v)]; !ok {
+		if !seen.Has(byFn(v)) {
 			continue // skip it
 		}
 		out = append(out, v)

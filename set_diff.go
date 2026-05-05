@@ -16,18 +16,16 @@ func SetDiffBy[S ~[]E, E any, K comparable](s1 S, s2 S, byFn func(E) K) (out1 S,
 	}
 
 	// elements seen in s1
-	seen1 := make(map[K]struct{}, len(s1))
-	for _, v := range s1 {
-		seen1[byFn(v)] = struct{}{}
-	}
+	seen1 := NewSetBy(s1, byFn)
 
 	// elements seen in s2
-	seen2 := make(map[K]struct{}, len(s2))
+	seen2 := make(Set[K], len(s2))
 	for _, v := range s2 {
-		seen2[byFn(v)] = struct{}{}
+		key := byFn(v)
+		seen2.Push(key)
 
 		// presented in s2, missing in s1
-		if _, ok := seen1[byFn(v)]; ok {
+		if seen1.Has(key) {
 			continue
 		}
 		out2 = append(out2, v)
@@ -35,7 +33,7 @@ func SetDiffBy[S ~[]E, E any, K comparable](s1 S, s2 S, byFn func(E) K) (out1 S,
 
 	// presented in s1, missing in s2
 	for _, v := range s1 {
-		if _, ok := seen2[byFn(v)]; ok {
+		if seen2.Has(byFn(v)) {
 			continue // skip it
 		}
 		out1 = append(out1, v)

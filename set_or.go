@@ -10,17 +10,17 @@ func SetOr[S ~[]E, E comparable](s1 S, s2 S) S {
 // I.e. unique elements presented in at least one slice.
 func SetOrBy[S ~[]E, E any, K comparable](s1 S, s2 S, byFn func(E) K) S {
 	// all elements seen so far
-	seen := make(map[K]struct{})
+	seen := make(Set[K])
 
 	var out S // capacity is unknown
 	for _, s := range []S{s1, s2} {
 		for _, v := range s {
 			key := byFn(v)
-			if _, ok := seen[key]; ok {
+			if seen.Has(key) {
 				continue // skip it
 			}
-			seen[key] = struct{}{}
 			out = append(out, v)
+			seen.Push(key)
 		}
 	}
 

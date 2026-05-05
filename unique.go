@@ -46,17 +46,17 @@ func UniqueInPlaceBy[S ~[]E, K comparable, E any](s S, byFn func(E) K) S {
 
 // uniqueBy gets only unique elements by custom key.
 func uniqueBy[S ~[]E, K comparable, E any](s S, initFn func(S) S, byFn func(E) K) S {
-	seen := make(map[K]struct{}, len(s))
+	seen := make(Set[K], len(s))
 
 	out := initFn(s) // copy or share
 	for _, v := range s {
 		key := byFn(v)
-		if _, ok := seen[key]; ok {
+		if seen.Has(key) {
 			continue // ignore, already seen
 		}
 
-		seen[key] = struct{}{}
 		out = append(out, v)
+		seen.Push(key)
 	}
 
 	return out
