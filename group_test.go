@@ -1,12 +1,24 @@
 package slices2_test
 
 import (
+	"fmt"
 	"reflect"
 	"strings"
 	"testing"
 
 	"github.com/Pilatuz/slices2"
 )
+
+// ExampleGroupBy an example for `GroupBy` function.
+func ExampleGroupBy() {
+	words := []string{"apple", "apricot", "banana", "blueberry"}
+	grouped := slices2.GroupBy(words, func(s string) string { return s[:1] })
+	fmt.Println(grouped["a"])
+	fmt.Println(grouped["b"])
+	// Output:
+	// [apple apricot]
+	// [banana blueberry]
+}
 
 // TestGroupBy unit tests for `GroupBy` function.
 func TestGroupBy(tt *testing.T) {

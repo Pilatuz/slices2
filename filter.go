@@ -1,15 +1,17 @@
 package slices2
 
 // Filter removes elements that DO NOT PASS condition.
+// Returns new slice with elements that pass the condition.
 //
-// Returns new slice with elements removed.
+// The condFn function returns true for elements that should be kept.
 func Filter[S ~[]E, E any](s S, condFn func(E) bool) S {
 	return filter(s, initNew[S, E], condFn)
 }
 
 // FilterInPlace removes elements that DO NOT PASS condition.
+// Returns original slice with elements removed in-place (no memory allocation).
 //
-// Returns original slice with elements removed in-place.
+// The condFn function returns true for elements that should be kept.
 func FilterInPlace[S ~[]E, E any](s S, condFn func(E) bool) S {
 	return filter(s, initSame[S, E], condFn)
 }

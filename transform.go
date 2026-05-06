@@ -4,7 +4,8 @@ import (
 	"errors"
 )
 
-// Transform transforms each element of slice E1 to E2.
+// Transform transforms each slice element from type E1 to type E2.
+// Returns a new slice of transformed elements.
 func Transform[E2 any, S1 ~[]E1, E1 any](s S1, convFn func(E1) E2) []E2 {
 	if s == nil {
 		return nil // nil transforms to nil
@@ -18,11 +19,11 @@ func Transform[E2 any, S1 ~[]E1, E1 any](s S1, convFn func(E1) E2) []E2 {
 	return out
 }
 
-// TransformEx transforms each element of slice E1 to E2 and check errors.
-// Stops on first error. Special ErrSkip skips elements.
+// TransformEx transforms each slice element from type E1 to type E2 with error handling.
+// Stops on the first error. Special error [ErrSkip] skips elements.
 func TransformEx[E2 any, S1 ~[]E1, E1 any](s S1, convFn func(E1) (E2, error)) ([]E2, error) {
 	if s == nil {
-		return nil, nil // nil transforms to nil with no error
+		return nil, nil // nil transforms to nil without error
 	}
 
 	out := make([]E2, 0, len(s))
@@ -30,7 +31,7 @@ func TransformEx[E2 any, S1 ~[]E1, E1 any](s S1, convFn func(E1) (E2, error)) ([
 		v2, err := convFn(v)
 		if err != nil {
 			if errors.Is(err, ErrSkip) {
-				continue // skip it
+				continue // skip this element
 			}
 			return nil, err // stop on first error
 		}
@@ -40,11 +41,12 @@ func TransformEx[E2 any, S1 ~[]E1, E1 any](s S1, convFn func(E1) (E2, error)) ([
 	return out, nil // done
 }
 
-// ErrSkip special sentinel error indicating that current element should be skipped.
+// ErrSkip is a special sentinel error that indicates the current element should be skipped.
+// Used in transformation functions with error handling.
 var ErrSkip = errors.New("skip")
 
-// Deref is a transformation function which dereferences pointers to values.
-// Nil pointers are skipped.
+// Deref dereferences pointers to values.
+// Nil pointers are skipped with [ErrSkip] error.
 func Deref[T any](p *T) (T, error) {
 	if p == nil {
 		var EMPTY T
