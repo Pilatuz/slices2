@@ -3,6 +3,7 @@ package slices2_test
 import (
 	"fmt"
 	"reflect"
+	"sort"
 	"testing"
 
 	"github.com/Pilatuz/slices2"
@@ -27,7 +28,9 @@ func ExampleSet() {
 	fmt.Println("After Pop(bar):", s)
 
 	// Check all elements (order is not guaranteed, so sort for predictable output)
-	fmt.Println("All():", slices2.Sorted(s.All()))
+	all := s.All()
+	sort.Strings(all)
+	fmt.Println("All():", all) // slices2.Sorted(s.All())
 
 	// Check HasAll
 	fmt.Println("HasAll(foo, qux):", s.HasAll("foo", "qux"))
@@ -286,7 +289,9 @@ func TestSet(t *testing.T) {
 	t.Run("All", func(t *testing.T) {
 		a := slices2.NewSet("foo", "bar", "baz")
 		expected := []string{"bar", "baz", "foo"}
-		if actual := slices2.Sorted(a.All()); !equal(actual, expected) {
+		actual := a.All()
+		sort.Strings(actual)
+		if !equal(actual, expected) {
 			t.Errorf("All()=`%#v`, expected `%#v`", actual, expected)
 		}
 	})
@@ -294,7 +299,9 @@ func TestSet(t *testing.T) {
 	t.Run("All_on_empty", func(t *testing.T) {
 		a := slices2.NewSet[string]()
 		expected := []string(nil)
-		if actual := slices2.Sorted(a.All()); !equal(actual, expected) {
+		actual := a.All()
+		sort.Strings(actual)
+		if !equal(actual, expected) {
 			t.Errorf("All()=`%#v`, expected `%#v`", actual, expected)
 		}
 	})
@@ -302,7 +309,9 @@ func TestSet(t *testing.T) {
 	t.Run("All_on_nil", func(t *testing.T) {
 		var a slices2.Set[string]
 		expected := []string(nil)
-		if actual := slices2.Sorted(a.All()); !equal(actual, expected) {
+		actual := a.All()
+		sort.Strings(actual)
+		if !equal(actual, expected) {
 			t.Errorf("All()=`%#v`, expected `%#v`", actual, expected)
 		}
 	})
@@ -318,7 +327,9 @@ func TestSet(t *testing.T) {
 	t.Run("All_int", func(t *testing.T) {
 		a := slices2.NewSet(3, 1, 2)
 		expected := []int{1, 2, 3}
-		if actual := slices2.Sorted(a.All()); !equal(actual, expected) {
+		actual := a.All()
+		sort.Ints(actual)
+		if !equal(actual, expected) {
 			t.Errorf("All()=`%#v`, expected `%#v`", actual, expected)
 		}
 	})
